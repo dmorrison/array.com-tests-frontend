@@ -22,6 +22,8 @@ Please write a `README` that includes how to start your application and anything
 
 Additionally, please create a Loom or YouTube video (private link) on the final deliverable of your test. Include any information on how you approached your test, what choices you made, what you liked, disliked, etc. 
 
+Open https://gitpod.io/workspaces and click the workspace menu icon and enable "Share" so we can access your Gitpod workspace.
+
 Submit the link for your Gitpod workspace and video to: https://docs.google.com/forms/d/e/1FAIpQLSfWYuJ4T1OZ1Bmc77fMJCe3X21AzOKhfdvAobWzupSeR3U7CA/viewform
 
 We will review your submission within two business days!
