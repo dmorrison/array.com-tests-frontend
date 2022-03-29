@@ -6,7 +6,7 @@ The first step in building a new consumer-facing Web Component is to use the HTM
 
 ##### The objectives are:
 
-- Open this repo in a new Gitpod workspace by clicking here: [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://gitlab.com/array.com/tests-frontend>)
+- Open this repo in a new Gitpod workspace by clicking here: [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://gitlab.com/array.com/tests-frontend)
 - Create a web application in a folder called `<lastname>-frontend-test`.
 - Create an index page that has a single Web Component called `array-credit-lock`.
 - Use the HTML content in the `test_page.html` file in this repo to develop the Web Component in vanilla javascript. The Web Component will contain all of the HTML content and be the only thing on the page.
