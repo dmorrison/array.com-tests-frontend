@@ -7,9 +7,9 @@ The first step in building a new consumer-facing Web Component is to use the HTM
 ##### The objectives are:
 
 - Open this repo in a new Gitpod workspace by clicking here: [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://gitlab.com/array.com/tests-frontend)
-- Create a web application in a folder called `<lastname>-frontend-test`.
 - Create an index page that has a single Web Component called `array-credit-lock`.
 - Use the HTML content in the `test_page.html` file in this repo to develop the Web Component in vanilla javascript. The Web Component will contain all of the HTML content and be the only thing on the page.
+- To preview your work, right click on `test_page.html` and left click on "Open with Live Server"
 - Your goal is to make the "lock history" table functional with real data.
 - You will find the JSON data for this table inside the `test_data.json` file in this repo. Use a Web Component attribute to define the URL to query for the JSON data. Fetch the content when the Web Component loads to render it. Return an error if the attribute is not provided.
 - Remove the Zepto script reference and replace any functionality it provided.
