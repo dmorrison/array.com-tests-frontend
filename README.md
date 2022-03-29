@@ -20,7 +20,7 @@ The first step in building a new consumer-facing Web Component is to use the HTM
 
 Please write a `README` that includes how to start your application and anything we should know. Please include notes on any design choices you made throughout the exercise (dependencies, libraries, assumptions, etc.).
 
-Additionally, please create a Loom or YouTube video (private link) on the final deliverable of your test. Include any information on how you approached your test, what choices you made, what you liked, disliked, etc. 
+Additionally, please create an unlisted YouTube video on the final deliverable of your test. Include any information on how you approached your test, what choices you made, what you liked, disliked, etc. 
 
 Open https://gitpod.io/workspaces and click the workspace menu icon and enable "Share" so we can access your Gitpod workspace.
 
