@@ -5,10 +5,6 @@
 @import "https://cdn-web-assets.array.io/assets/css/common.919b29a8967bf73da0ed659184b11d41.css";
 @import "https://cdn-web-assets.array.io/webcom-creditlock-1b/header.f70a581c7b6fb8d004f565244140ed26.css";
 
-/* Theme styles */
-@import "https://cdn-web-assets.array.io/brigit/brigit-common/brigit-common.203c32ae62d65e030d6ad68c20cda582.css";
-@import "https://cdn-web-assets.array.io/brigit/brigit-creditlock-1b/header.3b63bca06c1223af6a4a81a4652265e3.css";
-
 :host {
   display: block;
 }
