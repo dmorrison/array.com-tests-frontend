@@ -1,5 +1,5 @@
-const templateStream = await fetch("/components/credit-lock-header/template.html");
-const templateHtml = await templateStream.text();
+const templateResponse = await fetch("/components/credit-lock-header/template.html");
+const templateHtml = await templateResponse.text();
 
 class CreditLockHeader extends HTMLElement {
   constructor() {
