@@ -1,6 +1,16 @@
 const templateResponse = await fetch("/components/credit-lock-header/template.html");
 const templateHtml = await templateResponse.text();
 
+const themesInfo = {
+  brigit: {
+    wrapperDivClass: "theme-brigit",
+    styleUrls: [
+      "https://cdn-web-assets.array.io/brigit/brigit-common/brigit-common.203c32ae62d65e030d6ad68c20cda582.css",
+      "https://cdn-web-assets.array.io/brigit/brigit-creditlock-1b/header.3b63bca06c1223af6a4a81a4652265e3.css"
+    ],
+  }
+};
+
 class CreditLockHeader extends HTMLElement {
   constructor() {
     super();
@@ -23,16 +33,16 @@ class CreditLockHeader extends HTMLElement {
     this.addThemeStyles(shadowRoot);
   }
 
+  // Prototype of how to support theming.
   addThemeStyles(shadowRoot) {
-    const themeToUrls = {
-      "brigit": [
-        "https://cdn-web-assets.array.io/brigit/brigit-common/brigit-common.203c32ae62d65e030d6ad68c20cda582.css",
-        "https://cdn-web-assets.array.io/brigit/brigit-creditlock-1b/header.3b63bca06c1223af6a4a81a4652265e3.css"
-      ]
-    };
+    if (Object.hasOwn(themesInfo, this.theme)) {
+      const themeInfo = themesInfo[this.theme];
 
-    if (Object.hasOwn(themeToUrls, this.theme)) {
-      const urls = themeToUrls[this.theme];
+      const wrapperDivClass = themeInfo.wrapperDivClass;
+      const themeWrapperDiv = shadowRoot.querySelector("#theme-wrapper");
+      themeWrapperDiv.classList.add(wrapperDivClass);
+
+      const urls = themeInfo.styleUrls;
       for (const url of urls) {
         const e = document.createElement("link");
         e.rel = "stylesheet";
