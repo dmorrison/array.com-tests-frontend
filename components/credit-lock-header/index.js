@@ -27,19 +27,18 @@ class CreditLockHeader extends HTMLElement {
   }
 
   connectedCallback() {
-    const shadowRoot = this.attachShadow({ mode: "open" });
-    shadowRoot.innerHTML = templateHtml;
-    
-    this.addThemeStyles(shadowRoot);
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot.innerHTML = templateHtml;
+    this.addThemeStyles();
   }
 
   // Prototype of how to support theming.
-  addThemeStyles(shadowRoot) {
+  addThemeStyles() {
     if (Object.hasOwn(themesInfo, this.theme)) {
       const themeInfo = themesInfo[this.theme];
 
       const wrapperDivClass = themeInfo.wrapperDivClass;
-      const themeWrapperDiv = shadowRoot.querySelector("#theme-wrapper");
+      const themeWrapperDiv = this.shadowRoot.querySelector("#theme-wrapper");
       themeWrapperDiv.classList.add(wrapperDivClass);
 
       const urls = themeInfo.styleUrls;
@@ -47,7 +46,7 @@ class CreditLockHeader extends HTMLElement {
         const e = document.createElement("link");
         e.rel = "stylesheet";
         e.href = url;
-        shadowRoot.appendChild(e);
+        this.shadowRoot.appendChild(e);
       }
     }
   }
