@@ -20,7 +20,7 @@ class CreditLockCenter extends HTMLElement {
 
   // Prototype of how to hydrate HTML from an external template file.
   async hydrateTemplateHtml() {
-    const response = await fetch("/components/credit-lock-center/template.html");
+    const response = await fetch("/components/credit-lock-center/template.tmpl");
     const templateHtml = await response.text();
     this.shadowRoot.innerHTML = templateHtml;
     this.addThemeStyles();
