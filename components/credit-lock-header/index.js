@@ -1,6 +1,3 @@
-const templateResponse = await fetch("/components/credit-lock-header/template.html");
-const templateHtml = await templateResponse.text();
-
 const themesInfo = {
   brigit: {
     wrapperDivClass: "theme-brigit",
@@ -14,20 +11,17 @@ const themesInfo = {
 class CreditLockHeader extends HTMLElement {
   constructor() {
     super();
+
     this.theme = "";
-  }
 
-  static get observedAttributes() {
-    return ["theme"];
-  }
-
-  attributeChangedCallback(property, oldValue, newValue) {
-    if (oldValue === newValue) return;
-    this[property] = newValue;
-  }
-
-  connectedCallback() {
     this.attachShadow({ mode: "open" });
+    this.hydrateTemplateHtml();
+  }
+
+  // Prototype of how to hydrate HTML from an external template file.
+  async hydrateTemplateHtml() {
+    const response = await fetch("/components/credit-lock-header/template.html");
+    const templateHtml = await response.text();
     this.shadowRoot.innerHTML = templateHtml;
     this.addThemeStyles();
   }
@@ -49,6 +43,15 @@ class CreditLockHeader extends HTMLElement {
         this.shadowRoot.appendChild(e);
       }
     }
+  }
+
+  static get observedAttributes() {
+    return ["theme"];
+  }
+
+  attributeChangedCallback(property, oldValue, newValue) {
+    if (oldValue === newValue) return;
+    this[property] = newValue;
   }
 }
 
