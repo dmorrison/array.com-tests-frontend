@@ -12,8 +12,6 @@ class CreditLockHeader extends HTMLElement {
   constructor() {
     super();
 
-    this.theme = "";
-
     this.attachShadow({ mode: "open" });
     this.hydrateTemplateHtml();
   }
@@ -23,25 +21,30 @@ class CreditLockHeader extends HTMLElement {
     const response = await fetch("/components/credit-lock-header/template.tmpl");
     const templateHtml = await response.text();
     this.shadowRoot.innerHTML = templateHtml;
-    this.addThemeStyles();
+
+    // Need to call this since attributeChangedCallback() for theme might
+    // have been called while we were still fetching the template.
+    this.setThemeStyles(this.getAttribute("theme"));
   }
 
   // Prototype of how to support theming.
-  addThemeStyles() {
-    if (Object.hasOwn(themesInfo, this.theme)) {
-      const themeInfo = themesInfo[this.theme];
+  setThemeStyles(theme) {
+    // Has the component been hydrated from the template?
+    if (!this.shadowRoot.hasChildNodes()) return;
 
-      const wrapperDivClass = themeInfo.wrapperDivClass;
-      const themeWrapperDiv = this.shadowRoot.querySelector("#theme-wrapper");
-      themeWrapperDiv.classList.add(wrapperDivClass);
+    const themeInfo = themesInfo[theme];
+    if (themeInfo === undefined || themeInfo === null) return;
 
-      const urls = themeInfo.styleUrls;
-      for (const url of urls) {
-        const e = document.createElement("link");
-        e.rel = "stylesheet";
-        e.href = url;
-        this.shadowRoot.appendChild(e);
-      }
+    const wrapperDivClass = themeInfo.wrapperDivClass;
+    const themeWrapperDiv = this.shadowRoot.querySelector("#theme-wrapper");
+    themeWrapperDiv.classList.add(wrapperDivClass);
+
+    const urls = themeInfo.styleUrls;
+    for (const url of urls) {
+      const e = document.createElement("link");
+      e.rel = "stylesheet";
+      e.href = url;
+      this.shadowRoot.appendChild(e);
     }
   }
 
@@ -50,8 +53,9 @@ class CreditLockHeader extends HTMLElement {
   }
 
   attributeChangedCallback(property, oldValue, newValue) {
-    if (oldValue === newValue) return;
-    this[property] = newValue;
+    if (property === "theme") {
+      this.setThemeStyles(newValue);
+    }
   }
 }
 
