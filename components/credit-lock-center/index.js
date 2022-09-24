@@ -82,6 +82,10 @@ class CreditLockCenter extends BaseComponent {
       }
     });
 
+    // Populate the total count in the "Show All" link/button..
+    this.shadowRoot.querySelector(".history-item-count").innerText = historyEvents.length;
+
+    // Populate all history items.
     const historyListElem = this.shadowRoot.querySelector("ul.history-list-wrapper");
     for (const event of historyEvents) {
       historyListElem.append(this.createHistoryEventElement(event));
