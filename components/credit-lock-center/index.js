@@ -1,5 +1,7 @@
 import BaseComponent from "../baseComponent.js";
 
+const defaultNumOfHistoryItemsToShow = 5;
+
 class CreditLockCenter extends BaseComponent {
   constructor() {
     const templatePath = "/components/credit-lock-center/template.tmpl";
@@ -85,11 +87,19 @@ class CreditLockCenter extends BaseComponent {
     // Populate the total count in the "Show All" link/button..
     this.shadowRoot.querySelector(".history-item-count").innerText = historyEvents.length;
 
-    // Populate all history items.
-    const historyListElem = this.shadowRoot.querySelector("ul.history-list-wrapper");
-    for (const event of historyEvents) {
-      historyListElem.append(this.createHistoryEventElement(event));
+    // Populate history items.
+    const historyElems = [];
+    for (let i = 0; i < historyEvents.length; i++) {
+      const historyElem = this.createHistoryEventElement(historyEvents[i]);
+
+      if (i >= defaultNumOfHistoryItemsToShow) {
+        historyElem.style.display = "none";
+      }
+
+      historyElems.push(historyElem);
     }
+    const historyListElem = this.shadowRoot.querySelector("ul.history-list-wrapper");
+    historyListElem.append(...historyElems);
   }
 
   createHistoryEventElement(historyEvent) {
