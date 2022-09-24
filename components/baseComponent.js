@@ -6,7 +6,11 @@ class BaseComponent extends HTMLElement {
     this.themesInfo = themesInfo;
 
     this.attachShadow({ mode: "open" });
-    this.hydrateTemplateHtml();
+  }
+
+  async connectedCallback() {
+    await this.hydrateTemplateHtml();
+    this.setThemeStyles(this.getAttribute("theme"));
   }
 
   // Prototype of how to hydrate HTML from an external template file.
@@ -14,10 +18,6 @@ class BaseComponent extends HTMLElement {
     const response = await fetch(this.templatePath);
     const templateHtml = await response.text();
     this.shadowRoot.innerHTML = templateHtml;
-
-    // Need to call this since attributeChangedCallback() for theme might
-    // have been called while we were still fetching the template.
-    this.setThemeStyles(this.getAttribute("theme"));
   }
 
   // Prototype of how to support theming.
