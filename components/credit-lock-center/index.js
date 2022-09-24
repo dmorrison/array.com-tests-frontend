@@ -35,35 +35,6 @@ class CreditLockCenter extends BaseComponent {
     historyTitleElem.removeEventListener("click", this.historyTitleClickHandler);
   }
 
-  historyTitleClickHandler(event) {
-    const historyTitleElem = event.target;
-    const historyListPanelElem = historyTitleElem.closest(".history-list-panel");
-
-    // Switch text to "Show" or "Hide".
-    const title = historyTitleElem.innerText;
-    if (title.indexOf("Show") === 0) {
-      historyTitleElem.innerText = title.replace("Show", "Hide");
-    } else {
-      historyTitleElem.innerText = title.replace("Hide", "Show");
-    }
-
-    // Toggle visibility for the history list.
-    const historyListWrapperElem = historyListPanelElem.querySelector(".history-list-wrapper");
-    if (historyListWrapperElem.style.display === "none") {
-      historyListWrapperElem.style.display = "block";
-    } else {
-      historyListWrapperElem.style.display = "none";
-    }
-
-    // Toggle visibility for the "Show All" link/button.
-    const showAllElem = historyListPanelElem.querySelector(".show-all");
-    if (showAllElem.style.display === "none") {
-      showAllElem.style.display = "block";
-    } else {
-      showAllElem.style.display = "none";
-    }
-  }
-
   async hydrateLockHistory() {
     const lockHistoryUri = this.getAttribute("lock-history-uri");
     if (lockHistoryUri === undefined || lockHistoryUri === null) {
@@ -130,6 +101,37 @@ class CreditLockCenter extends BaseComponent {
     li.append(lockWrapperDiv);
 
     return li;
+  }
+
+  historyTitleClickHandler(event) {
+    const historyTitleElem = event.target;
+    const historyListPanelElem = historyTitleElem.closest(".history-list-panel");
+
+    // Switch text to "Show" or "Hide".
+    const title = historyTitleElem.innerText;
+    if (title.indexOf("Show") === 0) {
+      historyTitleElem.innerText = title.replace("Show", "Hide");
+    } else {
+      historyTitleElem.innerText = title.replace("Hide", "Show");
+    }
+
+    // Toggle visibility for the history list.
+    const historyListWrapperElem = historyListPanelElem.querySelector(".history-list-wrapper");
+    if (historyListWrapperElem.style.display === "none") {
+      historyListWrapperElem.style.display = "block";
+    } else {
+      historyListWrapperElem.style.display = "none";
+    }
+
+    // Toggle visibility for the "Show All" link/button.
+    const showAllElem = historyListPanelElem.querySelector(".show-all");
+    if (showAllElem.style.display === "none") {
+      showAllElem.style.display = "block";
+    } else {
+      showAllElem.style.display = "none";
+    }
+
+    event.stopPropagation();
   }
 }
 
