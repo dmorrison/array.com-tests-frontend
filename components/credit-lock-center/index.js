@@ -27,12 +27,18 @@ class CreditLockCenter extends BaseComponent {
     const historyTitleElem = this.shadowRoot.querySelector(".history-title");
     historyTitleElem.addEventListener("click", this.historyTitleClickHandler);
 
+    const showAllElem = this.shadowRoot.querySelector(".show-all");
+    showAllElem.addEventListener("click", this.showAllClickHandler);
+
     await this.hydrateLockHistory();
   }
  
   disconnectedCallback() {
     const historyTitleElem = this.shadowRoot.querySelector(".history-title");
     historyTitleElem.removeEventListener("click", this.historyTitleClickHandler);
+
+    const showAllElem = this.shadowRoot.querySelector(".show-all");
+    showAllElem.removeEventListener("click", this.showAllClickHandler);
   }
 
   async hydrateLockHistory() {
@@ -55,8 +61,9 @@ class CreditLockCenter extends BaseComponent {
       }
     });
 
-    // Populate the total count in the "Show All" link/button..
-    this.shadowRoot.querySelector(".history-item-count").innerText = historyEvents.length;
+    // Populate the text for the "Show All" link/button.
+    this.shadowRoot.querySelector(".show-all").innerText =
+      `Show All (${historyEvents.length})`;
 
     // Populate history items.
     const historyElems = [];
@@ -104,6 +111,8 @@ class CreditLockCenter extends BaseComponent {
   }
 
   historyTitleClickHandler(event) {
+    event.stopPropagation();
+
     const historyTitleElem = event.target;
     const historyListPanelElem = historyTitleElem.closest(".history-list-panel");
 
@@ -130,8 +139,23 @@ class CreditLockCenter extends BaseComponent {
     } else {
       showAllElem.style.display = "none";
     }
+  }
 
+  showAllClickHandler(event) {
     event.stopPropagation();
+
+    const showAllElem = event.target;
+    const needToShow = showAllElem.innerText.startsWith("Show All");
+    const historyListPanelElem = showAllElem.closest(".history-list-panel");
+    const historyElems = historyListPanelElem.querySelectorAll("ul.history-list-wrapper > li");
+
+    for (let i = 0; i < historyElems.length; i++) {
+      if (i >= defaultNumOfHistoryItemsToShow) {
+        historyElems[i].style.display = needToShow ? "block" : "none";
+      }
+    }
+
+    showAllElem.innerText = needToShow ? "Show Less" : `Show All (${historyElems.length})`;
   }
 }
 
