@@ -15,11 +15,17 @@ class CreditLockCenter extends BaseComponent {
     super(templatePath, themesInfo);
   }
 
+  static get observedAttributes() {
+    return [...BaseComponent.observedAttributes, "lock-history-uri"];
+  }
+
   async connectedCallback() {
     await super.connectedCallback();
 
     const historyTitleElem = this.shadowRoot.querySelector(".history-title");
     historyTitleElem.addEventListener("click", this.historyTitleClickHandler);
+
+    await this.hydrateLockHistory();
   }
  
   disconnectedCallback() {
@@ -54,6 +60,62 @@ class CreditLockCenter extends BaseComponent {
     } else {
       showAllElem.style.display = "none";
     }
+  }
+
+  async hydrateLockHistory() {
+    const lockHistoryUri = this.getAttribute("lock-history-uri");
+    if (lockHistoryUri === undefined || lockHistoryUri === null) {
+      throw new Error('The attribute "lock-history-uri" is required.');
+    }
+
+    const response = await fetch(lockHistoryUri);
+    const historyEvents = await response.json();
+
+    // Sort in descending order.
+    historyEvents.sort((a, b) => {
+      if (a.date > b.date) {
+        return -1;
+      } else if (a.date < b.date) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
+    const historyListElem = this.shadowRoot.querySelector("ul.history-list-wrapper");
+    for (const event of historyEvents) {
+      historyListElem.append(this.createHistoryEventElement(event));
+    }
+  }
+
+  createHistoryEventElement(historyEvent) {
+    const li = document.createElement("li");
+    li.classList.add("history-list");
+
+    const dateSpan = document.createElement("span");
+    dateSpan.classList.add("date");
+    const date = new Date(historyEvent.date);
+    dateSpan.innerText = date.toLocaleString();
+    li.append(dateSpan);
+
+    const lockWrapperDiv = document.createElement("div");
+    lockWrapperDiv.classList.add("lock-wrapper");
+
+    const lockImg = document.createElement("img");
+    lockImg.classList.add("lock-icon");
+    lockImg.src = historyEvent.type === "enrollment"
+      ? "/components/credit-lock-center/lock-icon.svg"
+      : "/components/credit-lock-center/unlock-icon.svg";
+    lockWrapperDiv.append(lockImg);
+
+    const lockSpan = document.createElement("span");
+    lockSpan.classList.add("lock");
+    lockSpan.innerText = historyEvent.type === "enrollment" ? "Locked" : "Unlocked";
+    lockWrapperDiv.append(lockSpan);
+
+    li.append(lockWrapperDiv);
+
+    return li;
   }
 }
 
