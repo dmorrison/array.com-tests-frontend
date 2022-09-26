@@ -1,0 +1,8 @@
+@import "/components/common.css";
+@import "https://cdn-web-assets.array.io/webcom-creditlock-1b/facts-steps.4735e127e353a812d005c7b7db7d38f8.css";
+@import "https://cdn-web-assets.array.io/common/collapsible/collapsible.137db3db165ac7a53818153471b712dc.css";
+@import "https://cdn-web-assets.array.io/common/collapsible/collapsible-arrow-icon.7766d33be558bc07ba07a7faa24d7624.css";
+
+:host {
+  display: block;
+}
