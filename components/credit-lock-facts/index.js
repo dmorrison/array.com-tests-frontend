@@ -23,30 +23,25 @@ class CreditLockFacts extends BaseComponent {
   async connectedCallback() {
     await super.connectedCallback();
 
-    // const showAllElem = this.shadowRoot.querySelector(".show-all");
-    // showAllElem.addEventListener("click", this.showAllClickHandler);
+    const collapsibleToggleElems = this.shadowRoot.querySelectorAll(
+      ".question, .open-close-icon");
+    for (const elem of collapsibleToggleElems) {
+      elem.addEventListener("click", this.toggleCollapse);
+    }
   }
  
   disconnectedCallback() {
-    // const showAllElem = this.shadowRoot.querySelector(".show-all");
-    // showAllElem.removeEventListener("click", this.showAllClickHandler);
+    const collapsibleToggleElems = this.shadowRoot.querySelectorAll(
+      ".question, .open-close-icon");
+    for (const elem of collapsibleToggleElems) {
+      elem.removeEventListener("click", this.toggleCollapse);
+    }
   }
 
-  showAllClickHandler(event) {
+  toggleCollapse(event) {
     event.stopPropagation();
 
-    const showAllElem = event.target;
-    const needToShow = showAllElem.innerText.startsWith("Show All");
-    const historyListPanelElem = showAllElem.closest(".history-list-panel");
-    const historyElems = historyListPanelElem.querySelectorAll("ul.history-list-wrapper > li");
-
-    for (let i = 0; i < historyElems.length; i++) {
-      if (i >= defaultNumOfHistoryItemsToShow) {
-        historyElems[i].style.display = needToShow ? "block" : "none";
-      }
-    }
-
-    showAllElem.innerText = needToShow ? "Show Less" : `Show All (${historyElems.length})`;
+    event.target.closest('.collapsible').classList.toggle("expanded");
   }
 }
 
