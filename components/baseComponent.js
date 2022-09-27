@@ -34,6 +34,9 @@ class BaseComponent extends HTMLElement {
   // shadow DOM section.
   addFonts() {
     for (const fontLink of this.commonFontLinks) {
+      const linkIsAlreadyPresent = document.head.querySelector(`link[href="${fontLink}"]`) !== null;
+      if (linkIsAlreadyPresent) continue;
+
       const link = document.createElement("link");
       link.rel = "stylesheet";
       link.href = fontLink;
