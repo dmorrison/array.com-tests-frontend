@@ -4,6 +4,7 @@ class BaseComponent extends HTMLElement {
 
     this.templatePath = templatePath;
     this.themesInfo = themesInfo;
+    this.addedThemeLinks = [];
     this.commonFontLinks = [
       "https://cdn-web-assets.array.io/assets/css/fonts.6dbfcff92a68d68f88fce60e4ec1a554.css",
       "https://cdn-web-assets.array.io/assets/css/euclid-fonts.8abeba6402d2a1e2efdb8c2ea40f9d81.css",
@@ -59,16 +60,25 @@ class BaseComponent extends HTMLElement {
     const themeInfo = this.themesInfo[theme];
     if (themeInfo === undefined || themeInfo === null) return;
 
+    // Set theme class name on wrapper div.
     const wrapperDivClass = themeInfo.wrapperDivClass;
     const themeWrapperDiv = this.shadowRoot.querySelector("#theme-wrapper");
     themeWrapperDiv.classList.add(wrapperDivClass);
 
+    // Inject theme styles links. Remove theme links that could
+    // have already been added first.
+    for (const addedLinkElem of this.addedThemeLinks) {
+      this.shadowRoot.removeChild(addedLinkElem);
+    }
+    this.addedThemeLinks = [];
+
     const urls = themeInfo.styleUrls;
     for (const url of urls) {
-      const e = document.createElement("link");
-      e.rel = "stylesheet";
-      e.href = url;
-      this.shadowRoot.appendChild(e);
+      const linkElem = document.createElement("link");
+      linkElem.rel = "stylesheet";
+      linkElem.href = url;
+      this.addedThemeLinks.push(linkElem);
+      this.shadowRoot.appendChild(linkElem);
     }
   }
 
