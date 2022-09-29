@@ -4,7 +4,7 @@ const defaultNumOfHistoryItemsToShow = 5;
 
 class CreditLockCenter extends BaseComponent {
   constructor() {
-    const templatePath = "/components/credit-lock-center/template.tmpl";
+    const templatePath = "/components/creditLockCenter/template.tmpl";
     const themesInfo = {
       brigit: {
         wrapperDivClass: "theme-brigit",
@@ -96,8 +96,8 @@ class CreditLockCenter extends BaseComponent {
     const lockImg = document.createElement("img");
     lockImg.classList.add("lock-icon");
     lockImg.src = historyEvent.type === "enrollment"
-      ? "/components/credit-lock-center/lock-icon.svg"
-      : "/components/credit-lock-center/unlock-icon.svg";
+      ? "/components/creditLockCenter/lock-icon.svg"
+      : "/components/creditLockCenter/unlock-icon.svg";
     lockWrapperDiv.append(lockImg);
 
     const lockSpan = document.createElement("span");

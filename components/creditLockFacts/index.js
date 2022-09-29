@@ -2,7 +2,7 @@ import BaseComponent from "../baseComponent.js";
 
 class CreditLockFacts extends BaseComponent {
   constructor() {
-    const templatePath = "/components/credit-lock-facts/template.tmpl";
+    const templatePath = "/components/creditLockFacts/template.tmpl";
     const themesInfo = {
       brigit: {
         wrapperDivClass: "theme-brigit",

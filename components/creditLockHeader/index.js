@@ -2,7 +2,7 @@ import BaseComponent from "../baseComponent.js";
 
 class CreditLockHeader extends BaseComponent {
   constructor() {
-    const templatePath = "/components/credit-lock-header/template.tmpl";
+    const templatePath = "/components/creditLockHeader/template.tmpl";
     const themesInfo = {
       brigit: {
         wrapperDivClass: "theme-brigit",
