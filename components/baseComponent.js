@@ -3,6 +3,7 @@ class BaseComponent extends HTMLElement {
     super();
 
     this.templatePath = templatePath;
+    this.isHydrated = false;
     this.themesInfo = themesInfo;
     this.addedThemeLinks = [];
     this.commonFontLinks = [
@@ -29,6 +30,7 @@ class BaseComponent extends HTMLElement {
     const response = await fetch(this.templatePath);
     const templateHtml = await response.text();
     this.shadowRoot.innerHTML = templateHtml;
+    this.isHydrated = true;
   }
 
   // Fonts need to be added in the root document to take effect on a
@@ -55,7 +57,7 @@ class BaseComponent extends HTMLElement {
   // Prototype of how to support theming.
   setThemeStyles(theme) {
     // Has the component been hydrated from the template?
-    if (!this.shadowRoot.hasChildNodes()) return;
+    if (!this.isHydrated) return;
 
     const themeInfo = this.themesInfo[theme];
     if (themeInfo === undefined || themeInfo === null) return;
