@@ -10,17 +10,39 @@ class ArrayCreditLock extends BaseComponent {
     super(templatePath, themesInfo);
   }
 
-  // static get observedAttributes() {
-  //   return ["theme", "lock-history-uri"];
-  // }
+  static get observedAttributes() {
+    return [...BaseComponent.observedAttributes, "lock-history-uri"];
+  }
 
-  // async connectedCallback() {
-  //   await super.connectedCallback();
+  async connectedCallback() {
+    await super.connectedCallback();
 
-  //   const script = document.createElement("script");
-  //   script.textContent = `console.log("From array-credit-lock connectedCallback.")`;
-  //   this.appendChild(script);
-  // }
+    this.setThemeOnSubcomponents(this.getAttribute("theme"));
+    this.setLockHistoryUriOnSubcomponent(this.getAttribute("lock-history-uri"));
+  }
+
+  attributeChangedCallback(property, oldValue, newValue) {
+    super.attributeChangedCallback(property, oldValue, newValue);
+
+    if (property === "theme") {
+      this.setThemeOnSubcomponents(newValue);
+    } else if (property === "lock-history-uri") {
+      this.setLockHistoryUriOnSubcomponent(newValue);
+    }
+  }
+
+  setThemeOnSubcomponents(theme) {
+    if (!this.isHydrated) return;
+    for (const kid of this.shadowRoot.children) {
+      kid.setAttribute("theme", theme);
+    }
+  }
+
+  setLockHistoryUriOnSubcomponent(uri) {
+    if (!this.isHydrated) return;
+    const creditLockCenterElem = this.shadowRoot.querySelector("credit-lock-center");
+    creditLockCenterElem.setAttribute("lock-history-uri", uri);
+  }
 }
 
 customElements.define("array-credit-lock", ArrayCreditLock);

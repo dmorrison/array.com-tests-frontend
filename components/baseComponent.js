@@ -56,7 +56,6 @@ class BaseComponent extends HTMLElement {
 
   // Prototype of how to support theming.
   setThemeStyles(theme) {
-    // Has the component been hydrated from the template?
     if (!this.isHydrated) return;
 
     const themeInfo = this.themesInfo[theme];
