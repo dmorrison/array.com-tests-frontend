@@ -1,3 +1,11 @@
+# My Modifications
+
+I pulled out pieces of markup and styling from `test_page.html` and abstracted them into Web Components. Visit `index.html` to see the new version referencing the web components. No build step is needed.
+
+--------------------------------
+
+# Original Instructions from Original Repo...
+
 ### Hiring - Frontend Test
 
 We build embeddable tools via the Web Components standard to deliver financial and credit services to our clients.
